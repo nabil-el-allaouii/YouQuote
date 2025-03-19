@@ -24,3 +24,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::put('/citation/edit/{id}' , [CitationController::class , 'update']);
     Route::post('/logout',[AuthController::class,'logout']);
 });
+
+Route::middleware('auth:sanctum' , 'approveByAdmin')->group(function(){
+    Route::patch('/approve/{id}' , [CitationController::class, 'approve']);
+});
