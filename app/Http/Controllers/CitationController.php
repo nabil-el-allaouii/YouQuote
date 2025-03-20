@@ -107,10 +107,29 @@ class CitationController extends Controller
             'content' => $request->content,
             'user_id' => $request->user()->id
         ]);
+        if ($request->has('tags')) {
+            $citation->tags()->sync($request->tags);
+        }
+        if ($request->has('categories')) {
+            $citation->categories()->sync($request->categories);
+        }
         return $this->Success([
             'status' => 'success',
             'user' => $request->user()->name
         ], 'citation created successfully');
+    }
+    public function like(string $id ,Request $request){
+        $user = $request->user();
+        $citation = Citation::find($id);
+        if(!$citation){
+            return response()->json([
+                'message'=>'no citation were found :/'
+            ]);
+        }
+        $user->likedCitations()->syncWithoutDetaching($citation->id);
+        return response()->json([
+            'message'=>'liked successfully :)'
+        ]);
     }
 
     /**

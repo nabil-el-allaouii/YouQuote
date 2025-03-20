@@ -28,7 +28,9 @@ class CitationRequest extends FormRequest
             'year' => ['required','string'],
             'url' => ['required', 'string', 'url'],
             'publisher' => ['required' , 'string' , 'max:255'],
-            'content' => ['required' , 'string']
+            'content' => ['required' , 'string'],
+            'tags'=>['nullable','array'],
+            'categories'=>['nullable','array']
         ];
     }
 }
